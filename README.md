@@ -1,0 +1,1 @@
+Trying to make very simple game like Mordhau in 2d with basic sword fight. Just to 3 hits + possibility to cancel hits. Not really a game, but rather gameplay MVP to see if it works (good) in 2D... or not.
