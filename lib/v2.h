@@ -78,6 +78,14 @@ struct v2 {
             x = y = 0;
         }
     }
+
+    v2 operator*(const v2& other) const {
+        return {x * other.x, y * other.y};
+    }
+
+    v2 operator/(const v2& other) const {
+        return {x / other.x, y / other.y};
+    }
 };
 
 inline std::ostream& operator<<(std::ostream& os, const v2& v) {

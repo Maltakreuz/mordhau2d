@@ -30,17 +30,21 @@ void draw_line(v2 a, v2 b, SDL_Color color) {
     SDL_RenderDrawLine(renderer, x0, y0, x1, y1);
 }
 
-void draw_rect(v2 center, v2 half_size, float angle_rad, SDL_Color color) {
+void draw_rect(v2 center, v2 half_size, float angle_deg, SDL_Color color, v2 pivot = {0.5f, 0.5f}) {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-
+    
+    float angle_rad = angle_deg * (M_PI / 180.0f);
     float c = cosf(angle_rad);
     float s = sinf(angle_rad);
 
+    // смещаем углы с учётом pivot
+    v2 offset = {half_size.x * (pivot.x * 2 - 1), half_size.y * (pivot.y * 2 - 1)};
+
     v2 corners[4] = {
-        {-half_size.x, -half_size.y},
-        { half_size.x, -half_size.y},
-        { half_size.x,  half_size.y},
-        {-half_size.x,  half_size.y}
+        {-half_size.x - offset.x, -half_size.y - offset.y},
+        { half_size.x - offset.x, -half_size.y - offset.y},
+        { half_size.x - offset.x,  half_size.y - offset.y},
+        {-half_size.x - offset.x,  half_size.y - offset.y}
     };
 
     v2 world[4];
@@ -61,5 +65,18 @@ void draw_rect(v2 center, v2 half_size, float angle_rad, SDL_Color color) {
     }
 }
 
+void draw_grid(int screen_width, int screen_height, int step, SDL_Color color) {
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
-} // namespace lvichki
+    // вертикальные линии
+    for (int x = 0; x <= screen_width; x += step) {
+        SDL_RenderDrawLine(renderer, x, 0, x, screen_height);
+    }
+
+    // горизонтальные линии
+    for (int y = 0; y <= screen_height; y += step) {
+        SDL_RenderDrawLine(renderer, 0, y, screen_width, y);
+    }
+}
+
+}

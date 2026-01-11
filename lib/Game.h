@@ -10,6 +10,7 @@ using namespace std;
 namespace lvichki {
 
 SDL_Renderer* renderer = nullptr;
+bool dbg_draw = false;
 
 class Game {
 private:
